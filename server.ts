@@ -19,6 +19,11 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 
+
+app.get('/', (req, res) => {
+  res.send({ message: 'Server is running' });
+});
+
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
