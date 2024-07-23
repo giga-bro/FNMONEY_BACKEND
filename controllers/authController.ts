@@ -13,11 +13,12 @@ const register = async (req: Request, res: Response) => {
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 86400 });
 
-        res.status(201).send({ message: 'User registered successfully',token });
+        res.status(201).send({ message: 'User registered successfully',token,userId:user._id });
     } catch (error) {
         res.status(500).send({ message: 'Internal Server Error' });
     }
 };
+
 const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -34,7 +35,7 @@ const login = async (req: Request, res: Response) => {
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 86400 });
 
-        res.status(200).send({ token });
+        res.status(200).send({ token ,userId:user._id });
     } catch (error) {
         res.status(500).send({ message: 'Internal Server Error' });
     }
