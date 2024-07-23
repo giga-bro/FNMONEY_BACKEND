@@ -11,12 +11,13 @@ const register = async (req: Request, res: Response) => {
         const user = new User({ username, email, password: bcrypt.hashSync(password, 8) });
         await user.save();
 
-        res.status(201).send({ message: 'User registered successfully' });
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 86400 });
+
+        res.status(201).send({ message: 'User registered successfully',token });
     } catch (error) {
         res.status(500).send({ message: 'Internal Server Error' });
     }
 };
-
 const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
