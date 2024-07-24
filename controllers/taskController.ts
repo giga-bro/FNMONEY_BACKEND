@@ -6,10 +6,10 @@ interface CustomRequest extends Request {
 }
 
 const createTask = async (req: CustomRequest, res: Response) => {
-    const { title, description } = req.body;
+    const { title, description , userId } = req.body;
 
     try {
-        const task = new Task({ title, description, userId: req.userId });
+        const task = new Task({ title, description, userId: userId });
         await task.save();
 
         res.status(201).send(task);
@@ -20,7 +20,7 @@ const createTask = async (req: CustomRequest, res: Response) => {
 
 const getTasks = async (req: CustomRequest, res: Response) => {
     try {
-        const tasks = await Task.find({ userId: req.userId });
+        const tasks = await Task.find({ userId:req.headers['userId'] });
 
         res.status(200).send(tasks);
     } catch (error) {
