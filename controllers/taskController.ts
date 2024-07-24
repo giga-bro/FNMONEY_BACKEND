@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 import Task from '../models/Task';
 
-interface CustomRequest extends Request {
-    userId: string;
-}
 
-const createTask = async (req: CustomRequest, res: Response) => {
+
+const createTask = async (req: Request, res: Response) => {
     const { title, description , userId } = req.body;
 
     try {
@@ -18,7 +16,7 @@ const createTask = async (req: CustomRequest, res: Response) => {
     }
 };
 
-const getTasks = async (req: CustomRequest, res: Response) => {
+const getTasks = async (req: Request, res: Response) => {
     try {
         const tasks = await Task.find({ userId:req.headers['userId'] });
 
@@ -28,7 +26,7 @@ const getTasks = async (req: CustomRequest, res: Response) => {
     }
 };
 
-const updateTask = async (req: CustomRequest, res: Response) => {
+const updateTask = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     try {
@@ -40,7 +38,7 @@ const updateTask = async (req: CustomRequest, res: Response) => {
     }
 };
 
-const deleteTask = async (req: CustomRequest, res: Response) => {
+const deleteTask = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     try {
